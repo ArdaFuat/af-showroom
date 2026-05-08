@@ -151,6 +151,7 @@ Doğru eşleşme için spawncode/model isimleri birebir aynı olmalıdır.
 4. Sunucuyu yeniden başlatın veya resource’u console üzerinden başlatın:
 
     refresh
+   
     ensure af-showroom
 
 ---
