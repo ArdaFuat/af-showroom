@@ -1,7 +1,7 @@
 Locales = Locales or {}
 
 Locales['tr'] = {
-    ['showroom_name'] = 'ArdaFuat Showroom',
+    ['showroom_name'] = 'PDM Kataloğu',
     ['showroom_subtitle'] = 'Araç kataloğu',
     ['target_open'] = 'Araç Kataloğunu Aç',
 
