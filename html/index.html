@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mandalina Showroom</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <main id="app" class="hidden">
+        <section class="catalog-shell">
+            <aside class="sidebar">
+                <div class="brand-row">
+                    <div class="logo">M</div>
+                    <div>
+                        <h1>Mandalina Showroom</h1>
+                        <p>Araç kataloğu</p>
+                    </div>
+                </div>
+
+                <div class="search-box">
+                    <input id="searchInput" type="text" placeholder="Araç, marka veya model ara..." autocomplete="off" />
+                </div>
+
+                <div class="side-title">Kategoriler</div>
+                <div id="categoryList" class="category-list"></div>
+            </aside>
+
+            <section class="content">
+                <header class="topbar">
+                    <div>
+                        <h2 id="activeTitle">Tüm Araçlar</h2>
+                        <p id="vehicleCount">0 araç listeleniyor</p>
+                    </div>
+                    <button id="closeBtn" class="close-btn">ESC</button>
+                </header>
+
+                <div id="vehicleGrid" class="vehicle-grid"></div>
+            </section>
+        </section>
+
+        <section id="detailPanel" class="detail-panel hidden">
+            <div class="detail-card">
+                <button id="detailCloseBtn" class="detail-close">×</button>
+                <div class="detail-hero">
+                    <img id="detailImage" alt="Araç görseli" />
+                </div>
+
+                <div class="detail-body">
+                    <div class="detail-brand-row">
+                        <img id="detailBrandLogo" class="brand-logo hidden" alt="Marka logosu" />
+                        <div>
+                            <div id="detailBrand" class="detail-brand">Marka</div>
+                            <h3 id="detailName">Araç</h3>
+                        </div>
+                    </div>
+
+                    <p id="detailDescription" class="detail-description"></p>
+
+                    <div class="info-grid">
+                        <div class="info-box"><span>Fiyat</span><strong id="detailPrice">-</strong></div>
+                        <div class="info-box"><span>Stok</span><strong id="detailStock">-</strong></div>
+                        <div class="info-box"><span>Kategori</span><strong id="detailCategory">-</strong></div>
+                        <div class="info-box"><span>Model</span><strong id="detailSpawncode">-</strong></div>
+                        <div class="info-box"><span>Bagaj</span><strong id="detailTrunk">-</strong></div>
+                    </div>
+
+                    <div class="performance-block">
+                        <h4>Performans</h4>
+                        <div id="performanceList"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
