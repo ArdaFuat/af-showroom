@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mandalina Showroom</title>
+    <title>ArdaFuat Showroom</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -11,26 +11,26 @@
         <section class="catalog-shell">
             <aside class="sidebar">
                 <div class="brand-row">
-                    <div class="logo">M</div>
+                    <div class="logo">AF</div>
                     <div>
-                        <h1>Mandalina Showroom</h1>
-                        <p>Araç kataloğu</p>
+                        <h1 data-locale="showroom_name">ArdaFuat Showroom</h1>
+                        <p data-locale="showroom_subtitle">Vehicle catalog</p>
                     </div>
                 </div>
 
                 <div class="search-box">
-                    <input id="searchInput" type="text" placeholder="Araç, marka veya model ara..." autocomplete="off" />
+                    <input id="searchInput" type="text" placeholder="Search vehicle, brand or model..." autocomplete="off" />
                 </div>
 
-                <div class="side-title">Kategoriler</div>
+                <div class="side-title" data-locale="ui_categories">Categories</div>
                 <div id="categoryList" class="category-list"></div>
             </aside>
 
             <section class="content">
                 <header class="topbar">
                     <div>
-                        <h2 id="activeTitle">Tüm Araçlar</h2>
-                        <p id="vehicleCount">0 araç listeleniyor</p>
+                        <h2 id="activeTitle">All Vehicles</h2>
+                        <p id="vehicleCount">0 vehicles listed</p>
                     </div>
                     <button id="closeBtn" class="close-btn">ESC</button>
                 </header>
@@ -43,30 +43,30 @@
             <div class="detail-card">
                 <button id="detailCloseBtn" class="detail-close">×</button>
                 <div class="detail-hero">
-                    <img id="detailImage" alt="Araç görseli" />
+                    <img id="detailImage" alt="Vehicle image" />
                 </div>
 
                 <div class="detail-body">
                     <div class="detail-brand-row">
-                        <img id="detailBrandLogo" class="brand-logo hidden" alt="Marka logosu" />
+                        <img id="detailBrandLogo" class="brand-logo hidden" alt="Brand logo" />
                         <div>
-                            <div id="detailBrand" class="detail-brand">Marka</div>
-                            <h3 id="detailName">Araç</h3>
+                            <div id="detailBrand" class="detail-brand">Brand</div>
+                            <h3 id="detailName">Vehicle</h3>
                         </div>
                     </div>
 
                     <p id="detailDescription" class="detail-description"></p>
 
                     <div class="info-grid">
-                        <div class="info-box"><span>Fiyat</span><strong id="detailPrice">-</strong></div>
-                        <div class="info-box"><span>Stok</span><strong id="detailStock">-</strong></div>
-                        <div class="info-box"><span>Kategori</span><strong id="detailCategory">-</strong></div>
-                        <div class="info-box"><span>Model</span><strong id="detailSpawncode">-</strong></div>
-                        <div class="info-box"><span>Bagaj</span><strong id="detailTrunk">-</strong></div>
+                        <div class="info-box"><span data-locale="ui_price">Price</span><strong id="detailPrice">-</strong></div>
+                        <div class="info-box"><span data-locale="ui_stock">Stock</span><strong id="detailStock">-</strong></div>
+                        <div class="info-box"><span data-locale="ui_category">Category</span><strong id="detailCategory">-</strong></div>
+                        <div class="info-box"><span data-locale="ui_model">Model</span><strong id="detailSpawncode">-</strong></div>
+                        <div class="info-box"><span data-locale="ui_trunk">Trunk</span><strong id="detailTrunk">-</strong></div>
                     </div>
 
                     <div class="performance-block">
-                        <h4>Performans</h4>
+                        <h4 data-locale="ui_performance">Performance</h4>
                         <div id="performanceList"></div>
                     </div>
                 </div>

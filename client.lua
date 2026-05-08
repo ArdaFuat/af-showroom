@@ -4,9 +4,34 @@ local showroomPed = nil
 local catalogOpen = false
 local targetAdded = false
 
+local function _L(key, ...)
+    local locale = Config.Locale or 'en'
+    local value = nil
+
+    if Locales and Locales[locale] and Locales[locale][key] then
+        value = Locales[locale][key]
+    elseif Locales and Locales['en'] and Locales['en'][key] then
+        value = Locales['en'][key]
+    else
+        value = key
+    end
+
+    local args = { ... }
+    if #args > 0 then
+        return string.format(value, ...)
+    end
+
+    return value
+end
+
+local function GetLocaleData()
+    local locale = Config.Locale or 'en'
+    return (Locales and Locales[locale]) or (Locales and Locales['en']) or {}
+end
+
 local function DebugPrint(message)
     if Config.Debug then
-        print('[mandalina-showroom] ' .. tostring(message))
+        print('^5[af-showroom]^7 ' .. tostring(message))
     end
 end
 
@@ -22,14 +47,16 @@ local function OpenCatalog()
         SendNUIMessage({
             action = 'open',
             data = {
-                vehicles = vehicles
+                vehicles = vehicles,
+                locale = GetLocaleData(),
+                localeCode = Config.Locale or 'en'
             }
         })
 
-        DebugPrint(('Katalog açıldı. Araç sayısı: %s'):format(#vehicles))
+        DebugPrint(_L('debug_catalog_opened', #vehicles))
 
         if #vehicles == 0 then
-            print('[mandalina-showroom] UYARI: Araç listesi boş geldi. Config.Vehicles kontrol et.')
+            print('^3[af-showroom]^7 ' .. _L('warning_empty_vehicle_list'))
         end
     end)
 end
@@ -41,7 +68,7 @@ local function CloseCatalog()
     SetNuiFocus(false, false)
 
     SendNUIMessage({ action = 'close' })
-    DebugPrint('Katalog kapatıldı.')
+    DebugPrint(_L('debug_catalog_closed'))
 end
 
 RegisterNetEvent('mandalina-showroom:client:openCatalog', function()
@@ -66,7 +93,7 @@ CreateThread(function()
     SetBlipAsShortRange(blip, true)
 
     BeginTextCommandSetBlipName('STRING')
-    AddTextComponentSubstringPlayerName(Config.Showroom.blip.label)
+    AddTextComponentSubstringPlayerName(_L('showroom_name'))
     EndTextCommandSetBlipName(blip)
 end)
 
@@ -111,7 +138,7 @@ CreateThread(function()
     end
 
     if GetResourceState(Config.TargetResource) ~= 'started' then
-        print(('[mandalina-showroom] HATA: %s çalışmıyor. Bu sürüm sadece target ile çalışır.'):format(Config.TargetResource))
+        print(('^1[af-showroom]^7 ' .. _L('error_target_not_started')):format(Config.TargetResource))
         return
     end
 
@@ -119,7 +146,7 @@ CreateThread(function()
         options = {
             {
                 icon = Config.Showroom.target.icon,
-                label = Config.Showroom.target.label,
+                label = _L('target_open'),
                 action = function()
                     OpenCatalog()
                 end
@@ -131,9 +158,11 @@ CreateThread(function()
     targetAdded = true
 end)
 
-RegisterCommand('showroom', function()
-    OpenCatalog()
-end, false)
+if Config.Debug then
+    RegisterCommand('showroom', function()
+        OpenCatalog()
+    end, false)
+end
 
 AddEventHandler('onResourceStop', function(resourceName)
     if resourceName ~= GetCurrentResourceName() then return end

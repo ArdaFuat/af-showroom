@@ -3,9 +3,38 @@ local QBCore = exports['qb-core']:GetCoreObject()
 local cachedVehicles = nil
 local detailIndex = nil
 
+local function _L(key, ...)
+    local locale = Config.Locale or 'en'
+    local value = nil
+
+    if Locales and Locales[locale] and Locales[locale][key] then
+        value = Locales[locale][key]
+    elseif Locales and Locales['en'] and Locales['en'][key] then
+        value = Locales['en'][key]
+    else
+        value = key
+    end
+
+    local args = { ... }
+    if #args > 0 then
+        return string.format(value, ...)
+    end
+
+    return value
+end
+
 local function Normalize(value)
     value = tostring(value or '')
     return string.lower(value)
+end
+
+local function LocalizeField(value)
+    if type(value) == 'table' then
+        local locale = Config.Locale or 'en'
+        return value[locale] or value['en'] or value['tr'] or '-'
+    end
+
+    return value
 end
 
 local function FormatPrice(value)
@@ -32,14 +61,14 @@ local function LoadDetailIndex()
 
     local raw = LoadResourceFile(GetCurrentResourceName(), 'html/vehicledata.json')
     if not raw or raw == '' then
-        print('[mandalina-showroom] UYARI: html/vehicledata.json yok veya boş. Sadece Config.Vehicles gösterilecek.')
+        print('^3[af-showroom]^7 ' .. _L('warning_detail_file_missing'))
         return detailIndex
     end
 
     local ok, data = pcall(json.decode, raw)
     if not ok or type(data) ~= 'table' then
-        print('[mandalina-showroom] UYARI: html/vehicledata.json JSON formatı bozuk. Sadece Config.Vehicles gösterilecek.')
-        print('[mandalina-showroom] JSON hata detayı: ' .. tostring(data))
+        print('^3[af-showroom]^7 ' .. _L('warning_detail_json_invalid'))
+        print('^3[af-showroom]^7 ' .. _L('warning_detail_json_error', tostring(data)))
         return detailIndex
     end
 
@@ -50,7 +79,7 @@ local function LoadDetailIndex()
         end
     end
 
-    print(('[mandalina-showroom] Detay verisi yüklendi. Eşleşebilir kayıt: %s'):format(#data))
+    print('^5[af-showroom]^7 ' .. _L('detail_data_loaded', #data))
     return detailIndex
 end
 
@@ -70,13 +99,13 @@ local function MergeVehicle(vehicle, detail)
 
     merged.spawncode = merged.spawncode or model
     merged.model = model
-    merged.name = merged.name or model
-    merged.brand = merged.brand or 'Bilinmiyor'
-    merged.category = merged.category or 'Diğer'
+    merged.name = LocalizeField(merged.name) or model
+    merged.brand = LocalizeField(merged.brand) or _L('ui_unknown')
+    merged.category = LocalizeField(merged.category) or _L('category_Diğer')
     merged.price = FormatPrice(merged.price)
     merged.stock = tonumber(merged.stock or 0) or 0
-    merged.description = merged.description or 'Bu araç için açıklama bulunamadı.'
-    merged.trunkspace = merged.trunkspace or '-'
+    merged.description = LocalizeField(merged.description) or _L('ui_no_description')
+    merged.trunkspace = LocalizeField(merged.trunkspace) or '-'
     merged.performance = merged.performance or {
         power = 0,
         acceleration = 0,
@@ -104,9 +133,68 @@ local function GetVehicles()
     if cachedVehicles then return cachedVehicles end
 
     cachedVehicles = BuildCatalog()
-    print(('[mandalina-showroom] Showroom kataloğu hazır. Config araç sayısı: %s | Menü araç sayısı: %s'):format(#(Config.Vehicles or {}), #cachedVehicles))
+    print('^5[af-showroom]^7 ' .. _L('catalog_ready', #(Config.Vehicles or {}), #cachedVehicles))
 
     return cachedVehicles
+end
+
+local function ParseVersion(version)
+    local major, minor, patch = tostring(version or '0.0.0'):match('(%d+)%.(%d+)%.(%d+)')
+    return tonumber(major) or 0, tonumber(minor) or 0, tonumber(patch) or 0
+end
+
+local function IsNewerVersion(latest, current)
+    local latestMajor, latestMinor, latestPatch = ParseVersion(latest)
+    local currentMajor, currentMinor, currentPatch = ParseVersion(current)
+
+    if latestMajor > currentMajor then return true end
+    if latestMajor < currentMajor then return false end
+
+    if latestMinor > currentMinor then return true end
+    if latestMinor < currentMinor then return false end
+
+    return latestPatch > currentPatch
+end
+
+local function CheckForUpdates()
+    if not Config.UpdateChecker or not Config.UpdateChecker.enabled then
+        if Config.Debug then print('^3[af-showroom]^7 ' .. _L('update_check_disabled')) end
+        return
+    end
+
+    if not Config.UpdateChecker.url or Config.UpdateChecker.url == '' then
+        print('^3[af-showroom]^7 ' .. _L('update_check_failed'))
+        return
+    end
+
+    PerformHttpRequest(Config.UpdateChecker.url, function(statusCode, response)
+        if statusCode ~= 200 or not response or response == '' then
+            print('^3[af-showroom]^7 ' .. _L('update_check_failed'))
+            return
+        end
+
+        local ok, data = pcall(json.decode, response)
+        if not ok or type(data) ~= 'table' or not data.version then
+            print('^3[af-showroom]^7 ' .. _L('update_check_invalid'))
+            return
+        end
+
+        local currentVersion = Config.Version or '0.0.0'
+        local latestVersion = tostring(data.version)
+        local changelog = data.changelog or 'No changelog provided.'
+        local downloadUrl = data.url or (Config.UpdateChecker and Config.UpdateChecker.repository) or 'https://github.com/ArdaFuat/af-showroom'
+
+        print('^5[af-showroom]^7 ' .. _L('update_current_version', currentVersion))
+        print('^5[af-showroom]^7 ' .. _L('update_latest_version', latestVersion))
+
+        if IsNewerVersion(latestVersion, currentVersion) then
+            print('^1[af-showroom]^7 ' .. _L('update_available'))
+            print('^1[af-showroom]^7 ' .. _L('update_changelog', changelog))
+            print('^1[af-showroom]^7 ' .. _L('update_download', downloadUrl))
+        else
+            print('^2[af-showroom]^7 ' .. _L('update_latest_installed'))
+        end
+    end, 'GET')
 end
 
 QBCore.Functions.CreateCallback('mandalina-showroom:server:getVehicles', function(source, cb)
@@ -118,4 +206,10 @@ RegisterCommand('showroomreload', function(source)
     cachedVehicles = nil
     detailIndex = nil
     GetVehicles()
+    print('^2[af-showroom]^7 ' .. _L('catalog_reloaded'))
 end, true)
+
+CreateThread(function()
+    Wait(3000)
+    CheckForUpdates()
+end)

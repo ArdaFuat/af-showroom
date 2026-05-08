@@ -1,0 +1,66 @@
+Locales = Locales or {}
+
+Locales['en'] = {
+    ['showroom_name'] = 'ArdaFuat Showroom',
+    ['showroom_subtitle'] = 'Vehicle catalog',
+    ['target_open'] = 'Open Vehicle Catalog',
+
+    ['ui_search_placeholder'] = 'Search vehicle, brand or model...',
+    ['ui_categories'] = 'Categories',
+    ['ui_all_vehicles'] = 'All Vehicles',
+    ['ui_vehicle_count'] = '%s vehicles listed',
+    ['ui_no_vehicles_title'] = 'No vehicles found',
+    ['ui_no_vehicles_desc'] = 'Change the search term or category filter.',
+    ['ui_unknown'] = 'Unknown',
+    ['ui_no_description'] = 'No description available for this vehicle.',
+    ['ui_no_stock'] = 'Out of stock',
+    ['ui_stock_unit'] = '%s available',
+
+    ['ui_price'] = 'Price',
+    ['ui_stock'] = 'Stock',
+    ['ui_category'] = 'Category',
+    ['ui_model'] = 'Model',
+    ['ui_trunk'] = 'Trunk',
+    ['ui_performance'] = 'Performance',
+    ['ui_vehicle_image_alt'] = 'Vehicle image',
+    ['ui_brand_logo_alt'] = 'Brand logo',
+
+    ['perf_power'] = 'Power',
+    ['perf_acceleration'] = 'Acceleration',
+    ['perf_handling'] = 'Handling',
+    ['perf_topspeed'] = 'Top Speed',
+
+    ['category_Kompakt'] = 'Compact',
+    ['category_Coupe'] = 'Coupe',
+    ['category_Sedan'] = 'Sedan',
+    ['category_Spor'] = 'Sports',
+    ['category_SUV'] = 'SUV',
+    ['category_Muscle'] = 'Muscle',
+    ['category_Offroad'] = 'Off-road',
+    ['category_Super'] = 'Super',
+    ['category_Motosiklet'] = 'Motorcycle',
+    ['category_Van'] = 'Van',
+    ['category_Diğer'] = 'Other',
+
+    ['debug_catalog_opened'] = 'Catalog opened. Vehicle count: %s',
+    ['debug_catalog_closed'] = 'Catalog closed.',
+    ['warning_empty_vehicle_list'] = 'WARNING: Vehicle list is empty. Check Config.Vehicles.',
+    ['error_target_not_started'] = 'ERROR: %s is not running. This version only works with target.',
+
+    ['warning_detail_file_missing'] = 'WARNING: html/vehicledata.json is missing or empty. Only Config.Vehicles will be displayed.',
+    ['warning_detail_json_invalid'] = 'WARNING: html/vehicledata.json has invalid JSON format. Only Config.Vehicles will be displayed.',
+    ['warning_detail_json_error'] = 'JSON error detail: %s',
+    ['detail_data_loaded'] = 'Detail data loaded. Matchable records: %s',
+    ['catalog_ready'] = 'Showroom catalog ready. Config vehicle count: %s | Menu vehicle count: %s',
+    ['catalog_reloaded'] = 'Showroom catalog reloaded.',
+
+    ['update_check_disabled'] = 'Update checker is disabled.',
+    ['update_check_failed'] = 'Update check failed. Could not reach GitHub version file.',
+    ['update_check_invalid'] = 'Update check failed. Invalid version data.',
+    ['update_current_version'] = 'Current version: v%s',
+    ['update_latest_version'] = 'Latest version: v%s',
+    ['update_available'] = 'New update available!',
+    ['update_changelog'] = 'Changelog: %s',
+    ['update_download'] = 'Download: %s',
+    ['update_latest_installed'] = 'You are using the latest version.'
+}

@@ -24,6 +24,35 @@ let vehicles = [];
 let categories = [];
 let activeCategory = 'all';
 let searchTerm = '';
+let locale = {};
+let localeCode = 'en';
+
+function t(key, fallback = key) {
+    return locale[key] || fallback;
+}
+
+function tf(key, value, fallback = key) {
+    return t(key, fallback).replace('%s', value);
+}
+
+function translateCategory(category) {
+    if (!category) return '-';
+    return t(`category_${category}`, category);
+}
+
+function applyStaticLocale() {
+    document.documentElement.lang = localeCode || 'en';
+    document.title = t('showroom_name', 'ArdaFuat Showroom');
+
+    document.querySelectorAll('[data-locale]').forEach((element) => {
+        const key = element.dataset.locale;
+        element.textContent = t(key, element.textContent);
+    });
+
+    searchInput.placeholder = t('ui_search_placeholder', 'Search vehicle, brand or model...');
+    detailImage.alt = t('ui_vehicle_image_alt', 'Vehicle image');
+    detailBrandLogo.alt = t('ui_brand_logo_alt', 'Brand logo');
+}
 
 function nuiPost(name, data = {}) {
     fetch(`https://${GetParentResourceName()}/${name}`, {
@@ -35,8 +64,13 @@ function nuiPost(name, data = {}) {
 
 function setCatalogData(data = {}) {
     vehicles = Array.isArray(data.vehicles) ? data.vehicles : [];
+    locale = data.locale || {};
+    localeCode = data.localeCode || 'en';
+
     categories = [...new Set(vehicles.map((vehicle) => vehicle.category).filter(Boolean))]
-        .sort((a, b) => a.localeCompare(b, 'tr'));
+        .sort((a, b) => translateCategory(a).localeCompare(translateCategory(b), localeCode));
+
+    applyStaticLocale();
 }
 
 function safeText(value, fallback = '-') {
@@ -45,7 +79,7 @@ function safeText(value, fallback = '-') {
 }
 
 function normalize(value) {
-    return safeText(value, '').toLocaleLowerCase('tr-TR');
+    return safeText(value, '').toLocaleLowerCase(localeCode === 'tr' ? 'tr-TR' : 'en-US');
 }
 
 function getFilteredVehicles() {
@@ -55,6 +89,7 @@ function getFilteredVehicles() {
             vehicle.name,
             vehicle.brand,
             vehicle.category,
+            translateCategory(vehicle.category),
             vehicle.spawncode,
             vehicle.model,
             vehicle.price,
@@ -75,7 +110,7 @@ function renderCategories() {
 
     categoryList.innerHTML = categoryData.map((category) => {
         const activeClass = category === activeCategory ? 'active' : '';
-        const label = category === 'all' ? 'Tüm Araçlar' : category;
+        const label = category === 'all' ? t('ui_all_vehicles', 'All Vehicles') : translateCategory(category);
 
         return `
             <button class="category-item ${activeClass}" data-category="${category}">
@@ -96,8 +131,8 @@ function renderCategories() {
 
 function stockText(stock) {
     const value = Number(stock || 0);
-    if (value <= 0) return 'Stok yok';
-    return `${value} adet`;
+    if (value <= 0) return t('ui_no_stock', 'Out of stock');
+    return tf('ui_stock_unit', value, '%s available');
 }
 
 function stockClass(stock) {
@@ -108,34 +143,37 @@ function stockClass(stock) {
 }
 
 function getVehicleImage(vehicle) {
+    const vehicleName = safeText(vehicle.name, t('ui_vehicle_image_alt', 'Vehicle'));
+    const brandLetter = safeText(vehicle.brand, 'A').charAt(0);
+
     if (vehicle.image && String(vehicle.image).trim() !== '') {
-        return `<img src="${vehicle.image}" alt="${safeText(vehicle.name, 'Araç')}" onerror="this.parentElement.innerHTML='<span>${safeText(vehicle.brand, 'M').charAt(0)}</span>'" />`;
+        return `<img src="${vehicle.image}" alt="${vehicleName}" onerror="this.parentElement.innerHTML='<span>${brandLetter}</span>'" />`;
     }
 
-    return `<span>${safeText(vehicle.brand, 'M').charAt(0)}</span>`;
+    return `<span>${brandLetter}</span>`;
 }
 
 function renderVehicles() {
     const filtered = getFilteredVehicles();
-    activeTitle.textContent = activeCategory === 'all' ? 'Tüm Araçlar' : activeCategory;
-    vehicleCount.textContent = `${filtered.length} araç listeleniyor`;
+    activeTitle.textContent = activeCategory === 'all' ? t('ui_all_vehicles', 'All Vehicles') : translateCategory(activeCategory);
+    vehicleCount.textContent = tf('ui_vehicle_count', filtered.length, '%s vehicles listed');
 
     if (filtered.length === 0) {
         vehicleGrid.innerHTML = `
             <div class="empty-state">
-                <strong>Araç bulunamadı</strong>
-                <span>Arama veya kategori filtresini değiştir.</span>
+                <strong>${t('ui_no_vehicles_title', 'No vehicles found')}</strong>
+                <span>${t('ui_no_vehicles_desc', 'Change the search term or category filter.')}</span>
             </div>
         `;
         return;
     }
 
-    vehicleGrid.innerHTML = filtered.map((vehicle, index) => `
+    vehicleGrid.innerHTML = filtered.map((vehicle) => `
         <article class="vehicle-card" data-index="${vehicles.indexOf(vehicle)}">
             <div class="vehicle-image">${getVehicleImage(vehicle)}</div>
-            <div class="vehicle-brand">${safeText(vehicle.brand, 'Bilinmiyor')}</div>
+            <div class="vehicle-brand">${safeText(vehicle.brand, t('ui_unknown', 'Unknown'))}</div>
             <div class="vehicle-name">${safeText(vehicle.name, vehicle.spawncode)}</div>
-            <p class="vehicle-desc">${safeText(vehicle.description, 'Bu araç için açıklama bulunamadı.')}</p>
+            <p class="vehicle-desc">${safeText(vehicle.description, t('ui_no_description', 'No description available for this vehicle.'))}</p>
             <div class="vehicle-footer">
                 <div>
                     <div class="price">${safeText(vehicle.price)}</div>
@@ -181,10 +219,10 @@ function closeDetail() {
 
 function perfLabel(key) {
     const labels = {
-        power: 'Güç',
-        acceleration: 'Hızlanma',
-        handling: 'Yol Tutuşu',
-        topspeed: 'Son Hız'
+        power: t('perf_power', 'Power'),
+        acceleration: t('perf_acceleration', 'Acceleration'),
+        handling: t('perf_handling', 'Handling'),
+        topspeed: t('perf_topspeed', 'Top Speed')
     };
     return labels[key] || key;
 }
@@ -209,12 +247,12 @@ function openDetail(vehicle) {
         detailBrandLogo.classList.add('hidden');
     }
 
-    detailBrand.textContent = safeText(vehicle.brand, 'Bilinmiyor');
+    detailBrand.textContent = safeText(vehicle.brand, t('ui_unknown', 'Unknown'));
     detailName.textContent = safeText(vehicle.name, vehicle.spawncode);
-    detailDescription.textContent = safeText(vehicle.description, 'Bu araç için açıklama bulunamadı.');
+    detailDescription.textContent = safeText(vehicle.description, t('ui_no_description', 'No description available for this vehicle.'));
     detailPrice.textContent = safeText(vehicle.price);
     detailStock.textContent = stockText(vehicle.stock);
-    detailCategory.textContent = safeText(vehicle.category);
+    detailCategory.textContent = translateCategory(vehicle.category);
     detailSpawncode.textContent = safeText(vehicle.spawncode || vehicle.model);
     detailTrunk.textContent = safeText(vehicle.trunkspace);
 

@@ -2,12 +2,13 @@ fx_version 'cerulean'
 game 'gta5'
 lua54 'yes'
 
-author 'MandalinaV'
-description 'Mandalina Showroom - Target only, config vehicle list with external detail merge'
-version '1.5.0'
+author 'Arda Fuat'
+description 'ArdaFuat Showroom - QBCore vehicle showroom/catalog system with locale support and GitHub update checker'
+version '1.1.0'
 
 shared_scripts {
-    'config.lua'
+    'config.lua',
+    'locales/*.lua'
 }
 
 client_scripts {

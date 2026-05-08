@@ -1,0 +1,66 @@
+Locales = Locales or {}
+
+Locales['tr'] = {
+    ['showroom_name'] = 'ArdaFuat Showroom',
+    ['showroom_subtitle'] = 'Araç kataloğu',
+    ['target_open'] = 'Araç Kataloğunu Aç',
+
+    ['ui_search_placeholder'] = 'Araç, marka veya model ara...',
+    ['ui_categories'] = 'Kategoriler',
+    ['ui_all_vehicles'] = 'Tüm Araçlar',
+    ['ui_vehicle_count'] = '%s araç listeleniyor',
+    ['ui_no_vehicles_title'] = 'Araç bulunamadı',
+    ['ui_no_vehicles_desc'] = 'Arama veya kategori filtresini değiştir.',
+    ['ui_unknown'] = 'Bilinmiyor',
+    ['ui_no_description'] = 'Bu araç için açıklama bulunamadı.',
+    ['ui_no_stock'] = 'Stok yok',
+    ['ui_stock_unit'] = '%s adet',
+
+    ['ui_price'] = 'Fiyat',
+    ['ui_stock'] = 'Stok',
+    ['ui_category'] = 'Kategori',
+    ['ui_model'] = 'Model',
+    ['ui_trunk'] = 'Bagaj',
+    ['ui_performance'] = 'Performans',
+    ['ui_vehicle_image_alt'] = 'Araç görseli',
+    ['ui_brand_logo_alt'] = 'Marka logosu',
+
+    ['perf_power'] = 'Güç',
+    ['perf_acceleration'] = 'Hızlanma',
+    ['perf_handling'] = 'Yol Tutuşu',
+    ['perf_topspeed'] = 'Son Hız',
+
+    ['category_Kompakt'] = 'Kompakt',
+    ['category_Coupe'] = 'Coupe',
+    ['category_Sedan'] = 'Sedan',
+    ['category_Spor'] = 'Spor',
+    ['category_SUV'] = 'SUV',
+    ['category_Muscle'] = 'Muscle',
+    ['category_Offroad'] = 'Offroad',
+    ['category_Super'] = 'Super',
+    ['category_Motosiklet'] = 'Motosiklet',
+    ['category_Van'] = 'Van',
+    ['category_Diğer'] = 'Diğer',
+
+    ['debug_catalog_opened'] = 'Katalog açıldı. Araç sayısı: %s',
+    ['debug_catalog_closed'] = 'Katalog kapatıldı.',
+    ['warning_empty_vehicle_list'] = 'UYARI: Araç listesi boş geldi. Config.Vehicles kontrol et.',
+    ['error_target_not_started'] = 'HATA: %s çalışmıyor. Bu sürüm sadece target ile çalışır.',
+
+    ['warning_detail_file_missing'] = 'UYARI: html/vehicledata.json yok veya boş. Sadece Config.Vehicles gösterilecek.',
+    ['warning_detail_json_invalid'] = 'UYARI: html/vehicledata.json JSON formatı bozuk. Sadece Config.Vehicles gösterilecek.',
+    ['warning_detail_json_error'] = 'JSON hata detayı: %s',
+    ['detail_data_loaded'] = 'Detay verisi yüklendi. Eşleşebilir kayıt: %s',
+    ['catalog_ready'] = 'Showroom kataloğu hazır. Config araç sayısı: %s | Menü araç sayısı: %s',
+    ['catalog_reloaded'] = 'Showroom kataloğu yeniden yüklendi.',
+
+    ['update_check_disabled'] = 'Güncelleme kontrolü devre dışı.',
+    ['update_check_failed'] = 'Güncelleme kontrolü başarısız oldu. GitHub version dosyasına ulaşılamadı.',
+    ['update_check_invalid'] = 'Güncelleme kontrolü başarısız oldu. Version datası geçersiz.',
+    ['update_current_version'] = 'Mevcut sürüm: v%s',
+    ['update_latest_version'] = 'Güncel sürüm: v%s',
+    ['update_available'] = 'Yeni güncelleme mevcut!',
+    ['update_changelog'] = 'Değişiklikler: %s',
+    ['update_download'] = 'İndirme: %s',
+    ['update_latest_installed'] = 'En güncel sürümü kullanıyorsunuz.'
+}

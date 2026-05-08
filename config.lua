@@ -2,7 +2,23 @@ Config = {}
 
 Config.Debug = false
 
--- Sadece target ile çalışır. Marker / E tuşu / turuncu işaret yoktur.
+-- Current resource version.
+-- Keep this value in sync with fxmanifest.lua and version.json when releasing a new update.
+Config.Version = '1.1.0'
+
+-- Language setting.
+-- Available locales: 'tr', 'en'
+Config.Locale = 'tr'
+
+-- GitHub update checker.
+-- This checks the latest public version from GitHub when the resource starts.
+Config.UpdateChecker = {
+    enabled = true,
+    url = 'https://raw.githubusercontent.com/ArdaFuat/af-showroom/main/version.json',
+    repository = 'https://github.com/ArdaFuat/af-showroom'
+}
+
+-- Target only system. No marker / E key text / orange checkpoint.
 Config.TargetResource = 'qb-target'
 
 Config.Showroom = {
@@ -17,20 +33,18 @@ Config.Showroom = {
         enabled = true,
         sprite = 225,
         color = 47,
-        scale = 0.75,
-        label = 'Mandalina Showroom'
+        scale = 0.75
     },
 
     target = {
         icon = 'fas fa-car',
-        label = 'Araç Kataloğunu Aç',
         distance = 2.0
     }
 }
 
--- Burasi senin showroom/galeri listendir.
--- Menüde SADECE buradaki araçlar görünür.
--- html/vehicledata.json sadece bu araçlara görsel/açıklama/performans bilgisi eklemek için kullanılır.
+-- This is your showroom/dealership catalog list.
+-- ONLY vehicles listed here will be displayed in the menu.
+-- html/vehicledata.json only adds image/description/performance data to these vehicles.
 Config.Vehicles = {
     -- Kompakt
     {
