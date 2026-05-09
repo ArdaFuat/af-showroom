@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
-  "changelog": "Added Turkish/English locale support and GitHub update checker.",
+  "version": "1.2.0",
+  "changelog": "Vehicle catalog expanded to 670 vehicles. Some non-roleplay-friendly vehicles may be removed in future updates.",
   "url": "https://github.com/ArdaFuat/af-showroom"
 }

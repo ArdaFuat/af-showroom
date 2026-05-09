@@ -1,0 +1,39 @@
+{
+    "generatedAt":  "2026-05-09T08:34:09.8401241Z",
+    "selectedClasses":  [
+                            "coupe",
+                            "sedan",
+                            "muscle",
+                            "super",
+                            "sport",
+                            "sport_classic",
+                            "motorcycle",
+                            "off_road",
+                            "suv",
+                            "compacts",
+                            "van"
+                        ],
+    "summary":  {
+                    "checked":  960,
+                    "selected":  670,
+                    "errors":  0,
+                    "applied":  true,
+                    "skippedImages":  false
+                },
+    "classCounts":  {
+                        "super":  68,
+                        "motorcycle":  60,
+                        "suv":  53,
+                        "sport":  129,
+                        "muscle":  101,
+                        "sport_classic":  57,
+                        "compacts":  19,
+                        "sedan":  47,
+                        "off_road":  72,
+                        "van":  41,
+                        "coupe":  23
+                    },
+    "errors":  [
+
+               ]
+}

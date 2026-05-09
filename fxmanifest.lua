@@ -25,7 +25,8 @@ files {
     'html/index.html',
     'html/style.css',
     'html/app.js',
-    'html/vehicledata.json'
+    'html/vehicledata.json',
+    'html/vehicle-images/*'
 }
 
 dependencies {

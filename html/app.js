@@ -18,6 +18,14 @@ const detailStock = document.getElementById('detailStock');
 const detailCategory = document.getElementById('detailCategory');
 const detailSpawncode = document.getElementById('detailSpawncode');
 const detailTrunk = document.getElementById('detailTrunk');
+const detailType = document.getElementById('detailType');
+const detailSeats = document.getElementById('detailSeats');
+const detailDrivetrain = document.getElementById('detailDrivetrain');
+const detailTopSpeed = document.getElementById('detailTopSpeed');
+const detailMass = document.getElementById('detailMass');
+const detailDimensions = document.getElementById('detailDimensions');
+const detailLapTime = document.getElementById('detailLapTime');
+const detailRaceTier = document.getElementById('detailRaceTier');
 const performanceList = document.getElementById('performanceList');
 
 let vehicles = [];
@@ -222,6 +230,7 @@ function perfLabel(key) {
         power: t('perf_power', 'Power'),
         acceleration: t('perf_acceleration', 'Acceleration'),
         handling: t('perf_handling', 'Handling'),
+        braking: t('perf_braking', 'Braking'),
         topspeed: t('perf_topspeed', 'Top Speed')
     };
     return labels[key] || key;
@@ -255,9 +264,17 @@ function openDetail(vehicle) {
     detailCategory.textContent = translateCategory(vehicle.category);
     detailSpawncode.textContent = safeText(vehicle.spawncode || vehicle.model);
     detailTrunk.textContent = safeText(vehicle.trunkspace);
+    detailType.textContent = safeText(vehicle.type);
+    detailSeats.textContent = safeText(vehicle.seatsText || vehicle.seats);
+    detailDrivetrain.textContent = safeText(vehicle.drivetrain);
+    detailTopSpeed.textContent = safeText(vehicle.topSpeed);
+    detailMass.textContent = safeText(vehicle.mass);
+    detailDimensions.textContent = safeText(vehicle.dimensions);
+    detailLapTime.textContent = safeText(vehicle.lapTime);
+    detailRaceTier.textContent = safeText(vehicle.raceTier);
 
     const performance = vehicle.performance || {};
-    performanceList.innerHTML = ['power', 'acceleration', 'handling', 'topspeed'].map((key) => {
+    performanceList.innerHTML = ['power', 'acceleration', 'handling', 'braking', 'topspeed'].map((key) => {
         const value = Number(performance[key] || 0);
         const width = Math.max(0, Math.min(100, value));
 
