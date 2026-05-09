@@ -2,7 +2,7 @@ fx_version 'cerulean'
 game 'gta5'
 lua54 'yes'
 
-author 'Arda Fuat'
+author 'ArdaFuat'
 description 'ArdaFuat Showroom - QBCore vehicle showroom/catalog system with locale support and GitHub update checker'
 version '1.2.0'
 
