@@ -4,7 +4,7 @@ Config.Debug = false
 
 -- Current resource version.
 -- Keep this value in sync with fxmanifest.lua and version.json when releasing a new update.
-Config.Version = '1.1.0'
+Config.Version = '1.2.0'
 
 -- Language setting.
 -- Available locales: 'tr', 'en'
