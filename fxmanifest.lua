@@ -4,7 +4,7 @@ lua54 'yes'
 
 author 'Arda Fuat'
 description 'ArdaFuat Showroom - QBCore vehicle showroom/catalog system with locale support and GitHub update checker'
-version '1.1.0'
+version '1.2.0'
 
 shared_scripts {
     'config.lua',
