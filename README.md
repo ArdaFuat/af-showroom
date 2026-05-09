@@ -2,6 +2,9 @@
 
 ArdaFuat Showroom is a standalone QBCore vehicle showroom / catalog resource for FiveM servers.
 
+<img width="1627" height="938" alt="Screenshot 2026-05-09 114756" src="https://github.com/user-attachments/assets/6bec9e30-bde7-4815-b977-5fd1090a3d11" />
+<img width="1659" height="950" alt="Screenshot 2026-05-09 114912" src="https://github.com/user-attachments/assets/fe78f789-010c-485c-922b-e601b4faa18b" />
+
 It lets players browse a clean vehicle catalog through a modern NUI interface opened from an NPC with `qb-target`. The resource is designed as a safe visual catalog layer only. It does **not** handle purchases, test drives, payments, garage registration, vehicle keys, stock transactions, or database writes. This makes it easy to use alongside an existing dealership system or to integrate into a custom dealership workflow later.
 
 ## v1.2.0 Update
